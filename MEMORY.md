@@ -7,6 +7,7 @@
 
 - Prefer stability: do not break output or Telegram connectivity while doing maintenance.
 - Do not send/handle passwords in chat; advise using password reset + 2FA if credentials were exposed.
+- Long-term memory preference: **store as much useful context as possible**, but **do not store/track media files** (videos/images/attachments) in long-term memory.
 
 ## Environment / setup highlights
 
