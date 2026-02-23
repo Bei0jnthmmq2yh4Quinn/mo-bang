@@ -96,7 +96,7 @@ if (topic === "news" && days) {
   body.days = days;
 }
 
-const resp = await fetch("https://api.tavily.com/search", {
+const resp = await fetch((process.env.TAVILY_BASE_URL || "https://api.tavily.com") + "/search", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

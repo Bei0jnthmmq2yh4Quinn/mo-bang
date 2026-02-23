@@ -53,4 +53,11 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ---
 
+### SSH
+
+- **nianmo-vps** → `root@23.95.34.155`, pwd: `lmmxqp980706Aa`
+  - Debian 5.10, 1G RAM, 25G disk
+
+---
+
 Add whatever helps you do your job. This is your cheat sheet.

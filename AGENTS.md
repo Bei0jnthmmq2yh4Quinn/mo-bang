@@ -26,6 +26,31 @@ You wake up fresh each session. These files are your continuity:
 
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 
+### 📂 记忆分层
+
+| 层级 | 文件 | 用途 |
+|------|------|------|
+| 热缓存 | `MEMORY.md` | 高频速查索引，保持精简 |
+| 项目层 | `memory/projects/nianmo-xhs.md` | 项目状态与待办 |
+| 风格层 | `memory/writing-style.md` | 写作风格档案 |
+| 教训层 | `memory/post-mortems.md` | 踩过的坑，按严重程度分级 |
+| 环境层 | `memory/context/environment.md` | 服务器/API/工具配置 |
+| 日志层 | `memory/YYYY-MM-DD.md` | 每日原始记录 |
+
+### 📋 日志格式
+
+每条日志按以下结构写，利于 memorySearch 精准命中：
+
+```
+### [PROJECT:名称] 标题
+- **结论**: 一句话总结
+- **文件变更**: 涉及的文件（如有）
+- **教训**: 踩坑点（如有）
+- **标签**: #tag1 #tag2
+```
+
+铁律：**记结论不记过程**。"用方案 C 成功，A/B 因 XX 失败" ✅ vs 三页操作流水账 ❌
+
 ### 🧠 MEMORY.md - Your Long-Term Memory
 
 - **Load in ALL sessions** (main + group chats — group is private, no external people)
@@ -166,7 +191,8 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
     "email": 1703275200,
     "calendar": 1703260800,
     "weather": null
-  }
+  },
+  "lastMemoryMaintenance": "2026-02-23"
 }
 ```
 
@@ -194,12 +220,13 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 
 ### 🔄 Memory Maintenance (During Heartbeats)
 
-Periodically (every few days), use a heartbeat to:
+检查 `memory/heartbeat-state.json` 的 `lastMemoryMaintenance`。如果距今 >= 7 天：
 
-1. Read through recent `memory/YYYY-MM-DD.md` files
-2. Identify significant events, lessons, or insights worth keeping long-term
-3. Update `MEMORY.md` with distilled learnings
-4. Remove outdated info from MEMORY.md that's no longer relevant
+1. 读最近 7 天的 `memory/YYYY-MM-DD.md` 日志
+2. 有价值的教训 → `memory/post-mortems.md`
+3. 项目进展 → 对应项目文件
+4. 过期信息从 MEMORY.md 清理
+5. 更新 `lastMemoryMaintenance` 为今天
 
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
