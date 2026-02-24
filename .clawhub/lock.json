@@ -8,6 +8,18 @@
     "xiaohongshu-mcp": {
       "version": "1.0.0",
       "installedAt": 1770543900813
+    },
+    "xiaohongshu-title": {
+      "version": "1.0.0",
+      "installedAt": 1771935078879
+    },
+    "douyin-hot-trend": {
+      "version": "1.0.1",
+      "installedAt": 1771935102831
+    },
+    "content-repurposing-engine": {
+      "version": "1.0.0",
+      "installedAt": 1771935135100
     }
   }
 }
