@@ -16,6 +16,18 @@
 - 风格档案：`memory/writing-style.md`
 - 内容管线：`memory/projects/nianmo-xhs.md`
 
+## 模型切换别名
+| 输入 | 实际模型 |
+|------|----------|
+| `52` | 003636/gpt-5.2-codex（默认） |
+| `53` | 003636/gpt-5.3-codex |
+| `think` | cliproxy/claude-opus-4-6-thinking |
+| `haiku` | openai-custom/gemini-2.5-flash |
+| `f-opus` | freestyle/claude-opus-4-6 |
+| `dschat` | apitest/deepseek-chat |
+| `dsr1` | apitest/deepseek-reasoner |
+- 用法：`/model 别名` 切换，`/model default` 切回
+
 ## 偏好与协议
 - 沟通直接，不喜欢废话
 - **输出笔记时：一篇一条消息发给老板（不要一股脑连发），方便复制**
@@ -56,6 +68,13 @@
 | **nano-banana-pro** | AI 图片/封面生成 | 做封面、配图 |
 | **video-frames** | 视频抽帧看内容 | 老板发抖音链接时 |
 | **yt-dlp**（命令行） | 下载抖音/YouTube 视频 | 配合 video-frames |
+
+## 新 VPS（23.80.89.41）
+- **用途**: 客户部署 OpenClaw（C 方案）
+- **系统**: Debian 12, 6G RAM, 99G disk
+- **已装**: Node 22 + pnpm + OpenClaw 2026.2.26 + systemd 服务
+- **已有服务**: CLIProxy + Caddy（fzl.201452.xyz）
+- **待办**: 等老板给 Telegram bot token + 模型配置
 
 ## 深度存储索引
 | 文件 | 内容 |

@@ -20,11 +20,18 @@
 | gemini2api | ge.320732.de5.net/v1 | gemini-auto/2.5-flash/2.5-pro/3-flash/3-pro/3.1-pro | 无 imagen |
 | openai-custom | api.003636.xyz/v1 | 杂项转发模型 | monica/nebius/ohmygpt 子路由 |
 | anthropic-custom | api.003636.xyz/v1 | claude-opus-4-5 | 备用 |
+| dkjsiogu | api.dkjsiogu.me | claude-opus-4-6 | 路由固定到4.6, 偶发529 Overloaded |
+| yuanjing | maas-api.ai-yuanjing.com/openapi/compatible-mode/v1 | glm-5, deepseek-r1/v3, qwen-plus/max | 试用限流~5RPM |
+| apitest | openai.api-test.us.ci/v1 | deepseek-chat 等7个DeepSeek模型 | 实测OK |
+| freestyle | 127.0.0.1:19090/v1 (本地代理) | claude-opus-4-6 | 上游直连被403, 需代理清洗请求头 |
 
 ## Alias
 - sonnet → 003636/gpt-5.2-codex
 - opus → 003636/gpt-5.3-codex
 - haiku → openai-custom/gemini-2.5-flash
+- dschat → apitest/deepseek-chat
+- dsr1 → apitest/deepseek-reasoner
+- f-opus → freestyle/claude-opus-4-6
 
 ## 搜索能力
 | 源 | 状态 | 备注 |
@@ -35,6 +42,12 @@
 | MinerU | ✅ | skill .env |
 | SearXNG | ✅ | localhost:8888 |
 | Brave | ❌ | 不使用 |
+
+## 本地代理服务
+| 端口 | 用途 | 脚本 | systemd |
+|------|------|------|---------|
+| 19090 | freestyle 请求头清洗 | scripts/freestyle_proxy.py | freestyle-proxy.service |
+| 19091 | cliproxy 请求头清洗 | scripts/cliproxy_proxy.py | cliproxy-proxy.service |
 
 ## 其他服务
 - 小红书 MCP: localhost:18060, 已登录

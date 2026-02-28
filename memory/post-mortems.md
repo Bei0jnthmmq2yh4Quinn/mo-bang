@@ -17,6 +17,19 @@
 - **结论**: GitHub 公开 key 红利期已过，继续投入 ROI 极低
 - **教训**: 自动化扫描有天花板，到头了就认，不要无脑加 query
 
+## 2026-02-26: /model 切换导致 session 模型混乱
+- **现象**: 6 个会话各跑不同模型，老板以为切了一下就回去了
+- **根因**: `/model xxx` 是 session 级持久覆盖，不会自动恢复
+- **修复**: 批量清除 sessions.json 里所有 model 字段
+- **教训**: 给用户说清楚 `/model` 是持久切换，用完要 `/model default` 切回来
+
+## 2026-02-27: 新渠道接入 SDK 请求头被风控拦截（freestyle + cliproxy）
+- **现象**: curl 直连 200，OpenClaw 调用链 403
+- **根因**: OpenClaw SDK 发请求带特征头（User-Agent 等），上游风控识别拦截
+- **修复**: 部署本地代理清洗请求头（freestyle:19090, cliproxy:19091）
+- **教训**: 新渠道接入必须测"OpenClaw 真实调用链"，不能只测 curl。同一个坑踩了两次。
+- **通用方案**: `scripts/*_proxy.py` + systemd user service
+
 ## 2026-02-14: Twitter bird 配置记忆丢失
 - **现象**: 之前配好了 bird (Twitter CLI)，但 session reset 后完全忘了
 - **根因**: 配置完成后没有写入记忆文件
