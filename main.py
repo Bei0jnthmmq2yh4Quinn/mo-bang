@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from app.routes import analysis, health, media, topics, trends
 
 # 创建 FastAPI 应用实例。
-app = FastAPI(title="Content Tools", version="1.0.0")
+app = FastAPI(title="墨榜", version="1.0.0")
 
 # 允许前端页面或外部客户端直接调用 API。
 app.add_middleware(

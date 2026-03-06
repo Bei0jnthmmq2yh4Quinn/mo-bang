@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Tools - 自媒体运营工具</title>
+    <title>墨榜 - 自媒体运营工具</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
@@ -13,20 +13,20 @@
 <body class="p-4 md:p-8">
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl md:text-4xl font-bold text-white text-center mb-8">
-            🎯 Content Tools
+            📝 墨榜
             <span class="block text-lg font-normal mt-2">自媒体运营工具</span>
         </h1>
 
         <div class="grid md:grid-cols-3 gap-4 mb-6">
-            <button onclick="showTab('trends')" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
+            <button onclick="showTab(trends)" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
                 <div class="text-2xl mb-2">🔥</div>
                 <div class="font-semibold">热点查询</div>
             </button>
-            <button onclick="showTab('analysis')" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
+            <button onclick="showTab(analysis)" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
                 <div class="text-2xl mb-2">📊</div>
                 <div class="font-semibold">对标分析</div>
             </button>
-            <button onclick="showTab('topics')" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
+            <button onclick="showTab(topics)" class="card p-4 text-center hover:shadow-lg transition cursor-pointer">
                 <div class="text-2xl mb-2">💡</div>
                 <div class="font-semibold">AI 选题</div>
             </button>
@@ -70,58 +70,67 @@
         const API = "/api";
 
         function showTab(tab) {
-            document.querySelectorAll('.card[id]').forEach(el => el.classList.add('hidden'));
-            document.getElementById(tab).classList.remove('hidden');
+            document.querySelectorAll(.card[id]).forEach(el => el.classList.add(hidden));
+            document.getElementById(tab).classList.remove(hidden);
         }
 
         async function getDouyin() {
-            const res = await fetch(API + '/trends/douyin');
+            const res = await fetch(API + /trends/douyin);
             const data = await res.json();
-            document.getElementById('trendsResult').innerHTML = data.data.map(t =>
+            document.getElementById(trendsResult).innerHTML = data.data.map(t =>
                 `<div class="flex justify-between p-3 bg-gray-50 rounded"><span>#${t.rank} ${t.title}</span><span class="text-gray-500">${(t.hot || 0).toLocaleString()}</span></div>`
-            ).join('');
+            ).join();
         }
 
         async function getXiaohongshu() {
-            const res = await fetch(API + '/trends/xiaohongshu');
+            const res = await fetch(API + /trends/xiaohongshu);
             const data = await res.json();
-            document.getElementById('trendsResult').innerHTML = data.data.map(t =>
+            document.getElementById(trendsResult).innerHTML = data.data.map(t =>
                 `<div class="flex justify-between p-3 bg-gray-50 rounded"><span>#${t.rank} ${t.title}</span><span class="text-gray-500">${(t.likes || 0).toLocaleString()} 赞</span></div>`
-            ).join('');
+            ).join();
         }
 
         async function analyze() {
-            const username = document.getElementById('username').value;
-            const platform = document.getElementById('platform').value;
-            const res = await fetch(API + '/analysis/benchmark', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+            const username = document.getElementById(username).value;
+            const platform = document.getElementById(platform).value;
+            const res = await fetch(API + /analysis/benchmark, {
+                method: POST,
+                headers: {Content-Type: application/json},
                 body: JSON.stringify({username, platform})
             });
             const data = await res.json();
             const d = data.data;
-            document.getElementById('analysisResult').innerHTML = `
+            document.getElementById(analysisResult).innerHTML = `
                 <div class="p-4 bg-gray-50 rounded">
                     <div class="font-bold text-lg">@${d.username}</div>
                     <div class="text-gray-600">${d.platform} | 粉丝: ${(d.followers || 0).toLocaleString()} | 赞: ${(d.avg_likes || 0).toLocaleString()}</div>
                     <div class="mt-2"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">${d.content_style}</span></div>
-                    <div class="mt-2 text-sm text-gray-500">话题: ${(d.topics || []).join(', ')}</div>
+                    <div class="mt-2 text-sm text-gray-500">话题: ${(d.topics || []).join(, )}</div>
                 </div>`;
         }
 
         async function generateTopics() {
-            const niche = document.getElementById('niche').value;
-            const benchmarkTopics = document.getElementById('benchmarkTopics').value.split(',').filter(x => x);
-            const trends = document.getElementById('trendsInput').value.split(',').filter(x => x);
-            const res = await fetch(API + '/topics/generate', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+            const niche = document.getElementById(niche).value;
+            const benchmarkTopics = document.getElementById(benchmarkTopics).value.split(,).filter(x => x);
+            const trends = document.getElementById(trendsInput).value.split(,).filter(x => x);
+            const res = await fetch(API + /topics/generate, {
+                method: POST,
+                headers: {Content-Type: application/json},
                 body: JSON.stringify({niche, benchmark_topics: benchmarkTopics, trends})
             });
             const data = await res.json();
-            document.getElementById('topicsResult').innerHTML = data.data.map(t =>
-                `<div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span>${t.title}</span><span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">${t.type}</span></div>`
-            ).join('');
+            document.getElementById(topicsResult).innerHTML = data.data.map(t =>
+                `<div class="p-3 bg-gray-50 rounded space-y-1">
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold">${t.title}</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">${t.type}</span>
+                    </div>
+                    <div class="text-sm text-gray-600">角度：${t.angle} | 形式：${t.format}</div>
+                    <div class="text-sm text-gray-500">Hook：${t.hook}</div>
+                    <div class="text-xs text-gray-500">要点：${(t.points || []).join( / )}</div>
+                    <div class="text-xs text-blue-600">${(t.hashtags || []).join( )}</div>
+                </div>`
+            ).join();
         }
     </script>
 </body>
