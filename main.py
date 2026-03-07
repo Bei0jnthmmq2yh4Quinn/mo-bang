@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.routes import analysis, health, media, mobang, topics, trends
+from app.routes import analysis, health, media, mobang, subscriptions, topics, trends
 
 app = FastAPI(title="墨榜", version="1.0.0")
 
@@ -22,6 +22,7 @@ app.include_router(health.router, prefix="/api", tags=["health"])
 app.include_router(trends.router, prefix="/api/trends", tags=["trends"])
 app.include_router(analysis.router, prefix="/api/analysis", tags=["analysis"])
 app.include_router(topics.router, prefix="/api/topics", tags=["topics"])
+app.include_router(subscriptions.router, prefix="/api/subscriptions", tags=["subscriptions"])
 app.include_router(media.router, prefix="/api/media", tags=["media"])
 app.include_router(mobang.router, prefix="/api/mobang", tags=["mobang"])
 

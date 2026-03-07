@@ -36,12 +36,33 @@ def build_industry_suggestions(industry: str, platform: str, items: List[Dict[st
     return suggestions
 
 
+def build_today_brief(industry: str, platform: str, goal: str, items: List[Dict[str, Any]]) -> Dict[str, Any]:
+    suggestions = build_industry_suggestions(industry, platform, items)
+    first = suggestions[0] if suggestions else {
+        'topic': f'{industry}今天适合做一条{goal}向内容',
+        'reason': '当前没有抓到合适热点，建议先用通用问题切入。',
+        'action': '先讲痛点，再讲方法，最后加行动引导。',
+        'hotspot': '通用话题',
+        'angle': '通用切入',
+    }
+    return {
+        'industry': industry,
+        'platform': platform,
+        'goal': goal,
+        'headline': first['topic'],
+        'reason': first['reason'],
+        'action': first['action'],
+        'hotspot': first['hotspot'],
+        'angle': first['angle'],
+        'title_hint': f'{industry}{goal}内容，可以先从「{first["hotspot"]}」切入',
+    }
+
+
 async def _fetch_douyin_trends() -> List[Dict[str, Any]]:
     async with httpx.AsyncClient(timeout=10.0) as client:
         resp = await client.get(DOUYIN_URL, headers={'User-Agent': USER_AGENT})
         resp.raise_for_status()
         payload = resp.json()
-
     results = []
     for item in payload.get('word_list', [])[:10]:
         title = item.get('word')
@@ -60,11 +81,9 @@ async def _fetch_xiaohongshu_trends() -> List[Dict[str, Any]]:
         resp = await client.get(XHS_EXPLORE_URL, headers={'User-Agent': USER_AGENT, 'Accept': 'text/html'})
         resp.raise_for_status()
         html = resp.text
-
     match = re.search(r'__INITIAL_STATE__=(\{.*?\})\s*</script>', html, re.S)
     if not match:
         raise ValueError('未能解析小红书页面数据')
-
     state = json.loads(_clean_xhs_state(match.group(1)))
     feeds = state.get('feed', {}).get('feeds', [])
     results = []
@@ -110,3 +129,13 @@ async def get_trend_suggestions(industry: str = '通用', platform: str = 'xiaoh
         return {'success': True, 'industry': industry, 'platform': platform, 'data': suggestions}
     except Exception:
         return {'success': False, 'industry': industry, 'platform': platform, 'data': [], 'message': '热点建议生成失败，请稍后重试'}
+
+
+@router.get('/brief')
+async def get_today_brief(industry: str = '通用', platform: str = 'xiaohongshu', goal: str = '涨粉'):
+    try:
+        data = await (_fetch_xiaohongshu_trends() if platform == 'xiaohongshu' else _fetch_douyin_trends())
+        brief = build_today_brief(industry, platform, goal, data)
+        return {'success': True, 'data': brief}
+    except Exception:
+        return {'success': False, 'data': {'industry': industry, 'platform': platform, 'goal': goal, 'headline': f'{industry}今天适合做一条{goal}向内容', 'reason': '热点拉取失败，先用通用痛点切入。', 'action': '先讲用户情绪，再讲方法，最后加行动引导。', 'hotspot': '通用话题', 'angle': '通用切入', 'title_hint': f'{industry}{goal}内容，先从通用痛点切入'}}
