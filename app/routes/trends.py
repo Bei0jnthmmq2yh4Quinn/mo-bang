@@ -109,7 +109,7 @@ async def get_douyin_trends():
         data = await _fetch_douyin_trends()
         return {'success': True, 'source': 'douyin-web', 'data': data}
     except Exception:
-        return {'success': False, 'source': 'douyin-web', 'data': [], 'message': '抖音热搜获取失败，请稍后重试'}
+        return {'success': False, 'source': 'douyin-web', 'data': [], 'message': '抖音热搜获取失败。建议先切到“小红书列表”或直接输入你手上的爆款文案继续使用。'}
 
 
 @router.get('/xiaohongshu')
@@ -118,7 +118,7 @@ async def get_xiaohongshu_trends():
         data = await _fetch_xiaohongshu_trends()
         return {'success': True, 'source': 'xiaohongshu-explore', 'data': data}
     except Exception:
-        return {'success': False, 'source': 'xiaohongshu-explore', 'data': [], 'message': '小红书热门获取失败，请稍后重试'}
+        return {'success': False, 'source': 'xiaohongshu-explore', 'data': [], 'message': '小红书热门获取失败。建议先用“行业 + 痛点”手动生成选题，或稍后重试。'}
 
 
 @router.get('/suggestions')
@@ -128,7 +128,7 @@ async def get_trend_suggestions(industry: str = '通用', platform: str = 'xiaoh
         suggestions = build_industry_suggestions(industry, platform, data)
         return {'success': True, 'industry': industry, 'platform': platform, 'data': suggestions}
     except Exception:
-        return {'success': False, 'industry': industry, 'platform': platform, 'data': [], 'message': '热点建议生成失败，请稍后重试'}
+        return {'success': False, 'industry': industry, 'platform': platform, 'data': [], 'message': '热点建议生成失败。你可以先切到“AI 选题”，手动输入行业和热点词继续生成。'}
 
 
 @router.get('/brief')
