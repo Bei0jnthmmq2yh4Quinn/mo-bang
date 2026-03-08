@@ -154,6 +154,16 @@ class MobangService:
             'tags': tags,
             'primary_title': titles[0],
             'cover_line': f'{industry}内容怎么写，反馈才会更好',
+            'cover_options': [
+                f'{industry}内容怎么写，反馈才会更好',
+                f'为什么你发了{industry}内容，还是没人来问',
+                f'{industry}做{goal}内容，别再一上来就讲自己',
+            ],
+            'opening_hooks': [
+                f'{hook}。',
+                f'很多做{industry}内容的人，不是不会写，而是一开口就偏了。',
+                f'如果你的内容一直没反馈，问题可能不是努力不够，而是表达顺序错了。',
+            ],
             'cta_options': [
                 '如果你也在做这类内容，但一直没反馈，可以把行业和目标发我。',
                 '你现在最卡的是选题、表达，还是转化？评论区聊聊。',
